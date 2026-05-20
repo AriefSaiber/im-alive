@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../features/check_in/check_in_home_screen.dart';
-import '../features/contacts/contacts_page.dart';
-import '../features/settings/settings_page.dart';
+import '../../features/check_in/check_in_home_screen.dart';
+import '../../features/contacts/contacts_page.dart';
+import '../../features/settings/settings_page.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({

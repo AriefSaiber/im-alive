@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'navigation/app_shell.dart';
-import 'theme/app_theme.dart';
+import 'core/navigation/app_shell.dart';
+import 'core/theme/app_theme.dart';
 
 class ImAliveApp extends StatefulWidget {
   const ImAliveApp({super.key});
