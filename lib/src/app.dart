@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 
-import 'features/check_in/check_in_home_screen.dart';
+import 'navigation/app_shell.dart';
+import 'theme/app_theme.dart';
 
-class ImAliveApp extends StatelessWidget {
+class ImAliveApp extends StatefulWidget {
   const ImAliveApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: const Color(0xFF247C5A),
-      brightness: Brightness.light,
-    );
+  State<ImAliveApp> createState() => _ImAliveAppState();
+}
 
+class _ImAliveAppState extends State<ImAliveApp> {
+  ThemeMode _themeMode = ThemeMode.system;
+
+  void _setDarkMode(bool isDarkMode) {
+    setState(() {
+      _themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "I'm Alive",
-      theme: ThemeData(
-        colorScheme: colorScheme,
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFF7FAF8),
-        appBarTheme: const AppBarTheme(centerTitle: false),
+      theme: AppTheme.light(),
+      darkTheme: AppTheme.dark(),
+      themeMode: _themeMode,
+      home: AppShell(
+        isDarkMode: _themeMode == ThemeMode.dark,
+        onDarkModeChanged: _setDarkMode,
       ),
-      home: const CheckInHomeScreen(),
     );
   }
 }
