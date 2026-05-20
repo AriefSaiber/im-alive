@@ -1,4 +1,4 @@
-import '../domain/safety_profile.dart';
+import '../../domain/safety_profile.dart';
 
 enum CheckInStatus { safe, dueSoon, overdue }
 

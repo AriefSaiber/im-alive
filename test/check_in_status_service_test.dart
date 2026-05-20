@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:im_alive/src/domain/safety_profile.dart';
-import 'package:im_alive/src/services/check_in_status_service.dart';
+import 'package:im_alive/src/features/check_in/check_in_status_service.dart';
 
 void main() {
   const service = CheckInStatusService();

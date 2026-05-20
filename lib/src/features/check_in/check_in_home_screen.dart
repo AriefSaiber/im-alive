@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/check_in_record.dart';
+import 'models/check_in_record.dart';
 
 class CheckInHomeScreen extends StatefulWidget {
   const CheckInHomeScreen({super.key});
