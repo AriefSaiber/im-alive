@@ -79,7 +79,7 @@ class _CheckInHomeScreenState extends State<CheckInHomeScreen>
                     Text(
                       _checkedInToday
                           ? 'You are checked in for today.'
-                          : 'Tap the button once to let your trusted contacts know you are okay.',
+                          : 'Tap once to check in for today.',
                       style: textTheme.bodyLarge,
                     ),
                     const SizedBox(height: 28),
@@ -99,7 +99,7 @@ class _CheckInHomeScreenState extends State<CheckInHomeScreen>
                               icon: Icons.verified_user_outlined,
                               title: 'You already checked in today',
                               message:
-                                  'The button is disabled until the next check-in window.',
+                                  'You are all set for today. Please come back tomorrow.',
                               backgroundColor: colorScheme.secondaryContainer,
                               foregroundColor: colorScheme.onSecondaryContainer,
                             )
@@ -154,7 +154,9 @@ class _AliveButton extends StatelessWidget {
     return AnimatedBuilder(
       animation: pulseAnimation,
       builder: (context, child) {
-        final scale = isCheckedIn ? 1.0 : pulseAnimation.value;
+        final disableAnimations = MediaQuery.disableAnimationsOf(context);
+        final scale =
+            (isCheckedIn || disableAnimations) ? 1.0 : pulseAnimation.value;
         return Transform.scale(
           scale: scale,
           child: child,
@@ -169,50 +171,57 @@ class _AliveButton extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           shape: const CircleBorder(),
-          child: InkWell(
-            customBorder: const CircleBorder(),
-            onTap: isCheckedIn ? null : onPressed,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 250),
-              width: 230,
-              height: 230,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: isCheckedIn ? disabledGradient : enabledGradient,
+          child: Tooltip(
+            message: isCheckedIn
+                ? 'Already checked in today'
+                : 'Tap to check in for today',
+            child: InkWell(
+              key: const Key('alive-check-in-button'),
+              customBorder: const CircleBorder(),
+              onTap: isCheckedIn ? null : onPressed,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                width: 220,
+                height: 220,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: isCheckedIn ? disabledGradient : enabledGradient,
+                  ),
+                  boxShadow: isCheckedIn
+                      ? null
+                      : <BoxShadow>[
+                          BoxShadow(
+                            color: colorScheme.primary.withOpacity(0.24),
+                            blurRadius: 28,
+                            offset: const Offset(0, 14),
+                          ),
+                        ],
                 ),
-                boxShadow: isCheckedIn
-                    ? null
-                    : <BoxShadow>[
-                        BoxShadow(
-                          color: colorScheme.primary.withOpacity(0.24),
-                          blurRadius: 28,
-                          offset: const Offset(0, 14),
-                        ),
-                      ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    isCheckedIn
-                        ? Icons.check_circle_outline
-                        : Icons.favorite_outline,
-                    size: 46,
-                    color: foregroundColor,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    isCheckedIn ? 'Done Today' : "I'm Alive",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: foregroundColor,
-                          fontWeight: FontWeight.w800,
-                        ),
-                  ),
-                ],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      isCheckedIn
+                          ? Icons.check_circle_outline
+                          : Icons.favorite_outline,
+                      size: 46,
+                      color: foregroundColor,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      isCheckedIn ? 'Done Today' : "I'm Alive",
+                      textAlign: TextAlign.center,
+                      style:
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                color: foregroundColor,
+                                fontWeight: FontWeight.w800,
+                              ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -314,8 +323,13 @@ class _RecentCheckIns extends StatelessWidget {
 
   String _formatDateTime(DateTime value) {
     final local = value.toLocal();
-    final hour = local.hour.toString().padLeft(2, '0');
+    final now = DateTime.now();
+    final isToday =
+        local.year == now.year && local.month == now.month && local.day == now.day;
+    final hour = local.hour % 12 == 0 ? 12 : local.hour % 12;
     final minute = local.minute.toString().padLeft(2, '0');
-    return '${local.year}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')} at $hour:$minute';
+    final suffix = local.hour >= 12 ? 'PM' : 'AM';
+    if (isToday) return 'Today at $hour:$minute $suffix';
+    return '${local.month}/${local.day}/${local.year} at $hour:$minute $suffix';
   }
 }

@@ -54,7 +54,7 @@ class AppTheme {
         color: colorScheme.surface,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(16),
           side: BorderSide(color: colorScheme.outlineVariant),
         ),
       ),
@@ -66,16 +66,17 @@ class AppTheme {
             fontWeight: FontWeight.w700,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(16),
           ),
         ),
       ),
       navigationBarTheme: NavigationBarThemeData(
+        height: 76,
         indicatorColor: colorScheme.primaryContainer,
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           final isSelected = states.contains(WidgetState.selected);
           return TextStyle(
-            fontSize: 13,
+            fontSize: 15,
             fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
           );
         }),
@@ -87,7 +88,7 @@ class AppTheme {
         titleLarge: TextStyle(fontWeight: FontWeight.w700),
         titleMedium: TextStyle(fontWeight: FontWeight.w700),
         bodyLarge: TextStyle(fontSize: 17, height: 1.35),
-        bodyMedium: TextStyle(fontSize: 15, height: 1.35),
+        bodyMedium: TextStyle(fontSize: 16, height: 1.4),
       ),
     );
   }

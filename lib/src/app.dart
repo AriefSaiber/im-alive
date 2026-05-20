@@ -28,7 +28,7 @@ class _ImAliveAppState extends State<ImAliveApp> {
       darkTheme: AppTheme.dark(),
       themeMode: _themeMode,
       home: AppShell(
-        isDarkMode: _themeMode == ThemeMode.dark,
+        themeMode: _themeMode,
         onDarkModeChanged: _setDarkMode,
       ),
     );
