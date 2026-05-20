@@ -11,11 +11,11 @@ class ImAliveApp extends StatefulWidget {
 }
 
 class _ImAliveAppState extends State<ImAliveApp> {
-  ThemeMode _themeMode = ThemeMode.system;
+  ThemeMode _themeMode = ThemeMode.light;
 
-  void _setDarkMode(bool isDarkMode) {
+  void _setThemeMode(ThemeMode mode) {
     setState(() {
-      _themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+      _themeMode = mode;
     });
   }
 
@@ -28,8 +28,8 @@ class _ImAliveAppState extends State<ImAliveApp> {
       darkTheme: AppTheme.dark(),
       themeMode: _themeMode,
       home: AppShell(
-        isDarkMode: _themeMode == ThemeMode.dark,
-        onDarkModeChanged: _setDarkMode,
+        themeMode: _themeMode,
+        onThemeModeChanged: _setThemeMode,
       ),
     );
   }

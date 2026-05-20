@@ -85,6 +85,7 @@ class _CheckInHomeScreenState extends State<CheckInHomeScreen>
                     const SizedBox(height: 28),
                     Center(
                       child: _AliveButton(
+                        key: const Key('alive_button'),
                         isCheckedIn: _checkedInToday,
                         pulseAnimation: _pulseAnimation,
                         onPressed: _checkIn,
@@ -128,6 +129,7 @@ class _CheckInHomeScreenState extends State<CheckInHomeScreen>
 
 class _AliveButton extends StatelessWidget {
   const _AliveButton({
+    super.key,
     required this.isCheckedIn,
     required this.pulseAnimation,
     required this.onPressed,
@@ -150,6 +152,9 @@ class _AliveButton extends StatelessWidget {
     ];
     final foregroundColor =
         isCheckedIn ? colorScheme.onSurfaceVariant : colorScheme.onPrimary;
+
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final buttonSize = (screenWidth * 0.62).clamp(180.0, 260.0);
 
     return AnimatedBuilder(
       animation: pulseAnimation,
@@ -174,8 +179,8 @@ class _AliveButton extends StatelessWidget {
             onTap: isCheckedIn ? null : onPressed,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 250),
-              width: 230,
-              height: 230,
+              width: buttonSize,
+              height: buttonSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: LinearGradient(
