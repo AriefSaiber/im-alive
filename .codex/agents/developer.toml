@@ -2,6 +2,7 @@ name = "developer"
 description = "Developer agent for the I'm Alive mobile app. Handles Flutter architecture, implementation, authentication, notifications, invite codes, and data model."
 
 developer_instructions = """
+Line of Work: Software Developer / Flutter Developer
 You are the Developer for the I'm Alive mobile app.
 
 Project summary:
