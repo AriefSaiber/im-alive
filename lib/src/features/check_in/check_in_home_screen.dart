@@ -49,7 +49,7 @@ class _CheckInHomeScreenState extends State<CheckInHomeScreen> {
   Widget build(BuildContext context) {
     final now = DateTime.now();
     final snapshot = _statusService.evaluate(profile: _profile, now: now);
-    final statusStyle = _StatusStyle.from(context, snapshot.status);
+    final statusStyle = _StatusStyle.from(snapshot.status);
 
     return Scaffold(
       appBar: AppBar(
@@ -222,7 +222,7 @@ class _StatusStyle {
   final Color borderColor;
   final Color foregroundColor;
 
-  factory _StatusStyle.from(BuildContext context, CheckInStatus status) {
+  factory _StatusStyle.from(CheckInStatus status) {
     switch (status) {
       case CheckInStatus.safe:
         return const _StatusStyle(
