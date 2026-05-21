@@ -196,3 +196,11 @@ For every build task:
 
 9\. OpenClaw posts final Slack summary.
 
+
+
+If the message contains "APPROVED: proceed", implementation may continue.
+
+If the message contains "HOLD", planning only.
+
+If the task touches auth, contacts, invite codes, notifications, Firebase rules, or missed-check-in alert logic, wait for "APPROVED: proceed" before committing.
+
