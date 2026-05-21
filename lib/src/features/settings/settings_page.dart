@@ -18,13 +18,9 @@ class SettingsPage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: <Widget>[
+            
             Text(
-              'Settings',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Keep the app comfortable and easy to read.',
+              'Keep the app comfortable and easy to read. Some items are preview-only.',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 20),
@@ -52,7 +48,7 @@ class SettingsPage extends StatelessWidget {
                     ),
                     leading: Icon(Icons.notifications_outlined),
                     title: Text('Daily reminders'),
-                    subtitle: Text('Notification setup is coming soon.'),
+                    subtitle: Text('Coming soon (preview only).'),
                   ),
                   Divider(
                     height: 1,
@@ -65,7 +61,7 @@ class SettingsPage extends StatelessWidget {
                     ),
                     leading: Icon(Icons.account_circle_outlined),
                     title: Text('Account'),
-                    subtitle: Text('Login is not connected yet.'),
+                    subtitle: Text('Coming soon (preview only).'),
                   ),
                 ],
               ),

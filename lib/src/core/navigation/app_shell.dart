@@ -23,6 +23,11 @@ class _AppShellState extends State<AppShell> {
 
   @override
   Widget build(BuildContext context) {
+    final isSystemDark =
+        MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+    final isDarkMode = widget.themeMode == ThemeMode.dark ||
+        (widget.themeMode == ThemeMode.system && isSystemDark);
+
     final pages = <Widget>[
       const CheckInHomeScreen(),
       const ContactsPage(),
@@ -33,17 +38,11 @@ class _AppShellState extends State<AppShell> {
     ];
 
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: pages,
-      ),
+      body: IndexedStack(index: _selectedIndex, children: pages),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onDestinationSelected: (index) =>
+            setState(() => _selectedIndex = index),
         destinations: const <NavigationDestination>[
           NavigationDestination(
             icon: Icon(Icons.favorite_border),
