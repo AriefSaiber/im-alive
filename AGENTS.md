@@ -428,3 +428,21 @@ Agents must not automatically:
 
 For UI foundation tasks only, auto-development is allowed.
 For auth, contacts, invite code, notification delivery, or missed-check-in logic, create a plan first and require human approval before code changes.
+
+## Flutter/Codex Environment
+
+Flutter SDK is expected at:
+
+~/development/flutter
+
+Before running Flutter commands, use:
+
+export PATH="$HOME/development/flutter/bin:$PATH"
+
+Standard validation commands:
+
+flutter pub get
+flutter analyze
+flutter test
+
+Codex should not rely on an Android emulator. Prefer static analysis, tests, and code review unless APK build is explicitly requested.

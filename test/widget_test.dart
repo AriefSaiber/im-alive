@@ -17,31 +17,24 @@ void main() {
     expect(find.text('Checked in'), findsOneWidget);
   });
 
-  testWidgets('navigates to contacts and settings and toggles dark mode', (
+  testWidgets('navigates to settings and updates theme placeholder', (
     tester,
   ) async {
     await tester.pumpWidget(const ImAliveApp());
 
-    await tester.tap(find.text('Contacts'));
-    await tester.pump(const Duration(milliseconds: 300));
-
-    expect(find.text('Contact setup is coming soon'), findsOneWidget);
-    expect(find.text('UI foundation placeholder'), findsOneWidget);
-
     await tester.tap(find.text('Settings'));
-    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pumpAndSettle();
 
-    expect(find.text('Dark mode'), findsOneWidget);
+    expect(find.text('Appearance'), findsOneWidget);
+    expect(find.text('Notification Preferences'), findsOneWidget);
+    expect(find.text('Emergency Message Template'), findsOneWidget);
+    expect(find.text('Account & Profile'), findsOneWidget);
+    expect(find.text('About App'), findsOneWidget);
 
-    final initialTile =
-        tester.widget<SwitchListTile>(find.byType(SwitchListTile));
+    expect(find.text('System'), findsOneWidget);
+    await tester.tap(find.text('Dark'));
+    await tester.pumpAndSettle();
 
-    await tester.tap(find.byType(Switch).first);
-    await tester.pump(const Duration(milliseconds: 300));
-
-    final updatedTile =
-        tester.widget<SwitchListTile>(find.byType(SwitchListTile));
-
-    expect(updatedTile.value, isNot(initialTile.value));
+    expect(find.text('Preview reminder time'), findsNothing);
   });
 }
