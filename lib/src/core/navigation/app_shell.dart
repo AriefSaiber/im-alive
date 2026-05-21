@@ -6,13 +6,13 @@ import '../../features/settings/settings_page.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({
-    required this.isDarkMode,
-    required this.onDarkModeChanged,
+    required this.themeMode,
+    required this.onThemeModeChanged,
     super.key,
   });
 
-  final bool isDarkMode;
-  final ValueChanged<bool> onDarkModeChanged;
+  final ThemeMode themeMode;
+  final ValueChanged<ThemeMode> onThemeModeChanged;
 
   @override
   State<AppShell> createState() => _AppShellState();
@@ -27,8 +27,8 @@ class _AppShellState extends State<AppShell> {
       const CheckInHomeScreen(),
       const ContactsPage(),
       SettingsPage(
-        isDarkMode: widget.isDarkMode,
-        onDarkModeChanged: widget.onDarkModeChanged,
+        themeMode: widget.themeMode,
+        onThemeModeChanged: widget.onThemeModeChanged,
       ),
     ];
 
