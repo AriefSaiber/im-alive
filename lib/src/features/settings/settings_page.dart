@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({
-    required this.isDarkMode,
-    required this.onDarkModeChanged,
+    required this.themeMode,
+    required this.onThemeModeChanged,
     super.key,
   });
 
-  final bool isDarkMode;
-  final ValueChanged<bool> onDarkModeChanged;
+  final ThemeMode themeMode;
+  final ValueChanged<ThemeMode> onThemeModeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +35,10 @@ class SettingsPage extends StatelessWidget {
                     secondary: const Icon(Icons.dark_mode_outlined),
                     title: const Text('Dark mode'),
                     subtitle: const Text('Use a darker, high-contrast theme.'),
-                    value: isDarkMode,
-                    onChanged: onDarkModeChanged,
+                    value: themeMode == ThemeMode.dark,
+                    onChanged: (value) => onThemeModeChanged(
+                      value ? ThemeMode.dark : ThemeMode.light,
+                    ),
                   ),
                   const Divider(height: 1),
                   const ListTile(

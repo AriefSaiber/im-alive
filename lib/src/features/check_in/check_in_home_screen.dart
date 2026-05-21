@@ -85,6 +85,7 @@ class _CheckInHomeScreenState extends State<CheckInHomeScreen>
                     const SizedBox(height: 28),
                     Center(
                       child: _AliveButton(
+                        key: const Key('alive_button'),
                         isCheckedIn: _checkedInToday,
                         pulseAnimation: _pulseAnimation,
                         onPressed: _checkIn,
@@ -128,6 +129,7 @@ class _CheckInHomeScreenState extends State<CheckInHomeScreen>
 
 class _AliveButton extends StatelessWidget {
   const _AliveButton({
+    super.key,
     required this.isCheckedIn,
     required this.pulseAnimation,
     required this.onPressed,
@@ -151,6 +153,9 @@ class _AliveButton extends StatelessWidget {
     final foregroundColor =
         isCheckedIn ? colorScheme.onSurfaceVariant : colorScheme.onPrimary;
 
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final buttonSize = (screenWidth * 0.62).clamp(180.0, 260.0);
+
     return AnimatedBuilder(
       animation: pulseAnimation,
       builder: (context, child) {
@@ -171,24 +176,39 @@ class _AliveButton extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           shape: const CircleBorder(),
-          child: Tooltip(
-            message: isCheckedIn
-                ? 'Already checked in today'
-                : 'Tap to check in for today',
-            child: InkWell(
-              key: const Key('alive-check-in-button'),
-              customBorder: const CircleBorder(),
-              onTap: isCheckedIn ? null : onPressed,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
-                width: 220,
-                height: 220,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: isCheckedIn ? disabledGradient : enabledGradient,
+          child: InkWell(
+            customBorder: const CircleBorder(),
+            onTap: isCheckedIn ? null : onPressed,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              width: buttonSize,
+              height: buttonSize,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: isCheckedIn ? disabledGradient : enabledGradient,
+                ),
+                boxShadow: isCheckedIn
+                    ? null
+                    : <BoxShadow>[
+                        BoxShadow(
+                          color: colorScheme.primary.withOpacity(0.24),
+                          blurRadius: 28,
+                          offset: const Offset(0, 14),
+                        ),
+                      ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    isCheckedIn
+                        ? Icons.check_circle_outline
+                        : Icons.favorite_outline,
+                    size: 46,
+                    color: foregroundColor,
                   ),
                   boxShadow: isCheckedIn
                       ? null
