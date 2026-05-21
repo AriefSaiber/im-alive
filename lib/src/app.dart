@@ -11,7 +11,7 @@ class ImAliveApp extends StatefulWidget {
 }
 
 class _ImAliveAppState extends State<ImAliveApp> {
-  ThemeMode _themeMode = ThemeMode.light;
+  ThemeMode _themeMode = ThemeMode.system;
 
   void _setThemeMode(ThemeMode mode) {
     setState(() {
