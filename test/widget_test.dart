@@ -26,7 +26,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Appearance'), findsOneWidget);
-    expect(find.text('Daily Reminder Time'), findsOneWidget);
+    expect(find.text('Notification Preferences'), findsOneWidget);
     expect(find.text('Emergency Message Template'), findsOneWidget);
     expect(find.text('Account & Profile'), findsOneWidget);
     expect(find.text('About App'), findsOneWidget);

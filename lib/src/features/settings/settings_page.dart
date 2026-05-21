@@ -16,6 +16,8 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   TimeOfDay _reminderTime = const TimeOfDay(hour: 8, minute: 0);
+  bool _dailyReminderEnabled = true;
+  bool _contactAlertsEnabled = true;
   late final TextEditingController _messageController;
 
   @override
@@ -87,15 +89,47 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             const SizedBox(height: 16),
             _SectionCard(
-              title: 'Daily Reminder Time',
-              subtitle: 'Preview only. Real reminders are not active yet.',
-              child: ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.schedule_outlined),
-                title: const Text('Reminder time'),
-                subtitle: Text(MaterialLocalizations.of(context).formatTimeOfDay(_reminderTime)),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: _pickReminderTime,
+              title: 'Notification Preferences',
+              subtitle: 'Control reminders and trusted-contact alerts.',
+              child: Column(
+                children: <Widget>[
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    secondary: const Icon(Icons.notifications_active_outlined),
+                    title: const Text('Daily reminder'),
+                    subtitle: const Text('Get a gentle daily check-in reminder.'),
+                    value: _dailyReminderEnabled,
+                    onChanged: (value) {
+                      setState(() => _dailyReminderEnabled = value);
+                    },
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    enabled: _dailyReminderEnabled,
+                    leading: const Icon(Icons.schedule_outlined),
+                    title: const Text('Reminder time'),
+                    subtitle: Text(
+                      _dailyReminderEnabled
+                          ? MaterialLocalizations.of(context).formatTimeOfDay(_reminderTime)
+                          : 'Enable daily reminder first',
+                    ),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: _dailyReminderEnabled ? _pickReminderTime : null,
+                  ),
+                  const Divider(),
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    secondary: const Icon(Icons.family_restroom_outlined),
+                    title: const Text('Trusted contact alerts'),
+                    subtitle: const Text(
+                      'Allow alerts when no check-in is received for 2 days.',
+                    ),
+                    value: _contactAlertsEnabled,
+                    onChanged: (value) {
+                      setState(() => _contactAlertsEnabled = value);
+                    },
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 16),
